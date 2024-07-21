@@ -269,7 +269,7 @@ def iniciarSecion(request):
             login(request,user)
             return redirect('home')
 """
-
+"""
 def registrar(request):
     if request.method == "POST":
         miForm = RegistrarForm(request.POST)
@@ -286,7 +286,7 @@ def registrar(request):
 
 def inicio(request):
     return render(request, 'entidades/inicio.html')
-
+"""
 
 
 """
@@ -381,7 +381,7 @@ def registrarUsuarios(request):
         if form.is_valid():
             form.save()
             return redirect('/')
-    return render(request, 'entidades/index.html',{"form": form})
+    return render(request, 'entidades/inicio.html',{"form": form})
 
 @login_required
 def usuariosRegistrados(request):

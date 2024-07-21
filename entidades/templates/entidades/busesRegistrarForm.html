@@ -70,6 +70,7 @@
             <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
             <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
             {% endif %}
+      </div>
       <!-- header -->
       <header>
          <!-- header inner -->
@@ -82,14 +83,15 @@
                      </div>
                   </div>
                   <div class="col-md-8 col-sm-8">
-                     <ul class="conat_info d_none ">
-                        {% if not user.is_authenticated %}
-                        <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                        {% endif %}
-                        {% if user.is_authenticated %}
-                        <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        {% endif %}
-                     </ul>
+                     <div class="right_bottun">
+                        <ul class="conat_info d_none ">
+                           {% if not user.is_authenticated %}
+                           <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                           {% endif %}
+                           {% if user.is_authenticated %}
+                           <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                           {% endif %}
+                        </ul>
                         <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
                      </div>
                   </div>
@@ -126,24 +128,24 @@
                                    </div>
                                 </div>
                                 <div class="col-md-6" >
-                                   <form action="" class="transfot" method="POST"">
-                                      {% csrf_token %}
-                                      <div class="col-md-12">
-                                         <span>Somos Professional en Conducir</span>
-                                         <h3>Registrar Buses o Camiones</h3>
-                                      </div>
-                                      <table>
-                                      <div class="col-md-12">
-                                         <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
-                                      </div>
-                                      <div class="col-md-12">
-                                         <input class="transfot_form" placeholder="Placa" maxlength="7" type="text" name="placa" required>
-                                      </div>
-                                      </table>
-                                      <div class="col-md-12">
-                                         <button type="submit" class="get_now" >Registrar</button>
-                                      </div>
-                                   </form>
+                                 <form action="" class="transfot" method="POST"">
+                                    {% csrf_token %}
+                                    <div class="col-md-12">
+                                       <span>Somos Professional en Conducir</span>
+                                       <h3>Registrar Buses o Camiones</h3>
+                                    </div>
+                                    <table>
+                                    <div class="col-md-12">
+                                       <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                       <input class="transfot_form" placeholder="Placa" maxlength="7" type="text" name="placa" required>
+                                    </div>
+                                    </table>
+                                    <div class="col-md-12">
+                                       <button type="submit" class="get_now" >Registrar</button>
+                                    </div>
+                                 </form>
                                 </div>
                              </div>
                           </div>

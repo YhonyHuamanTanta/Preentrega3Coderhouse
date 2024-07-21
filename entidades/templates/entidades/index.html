@@ -43,21 +43,34 @@
       <div id="mySidepanel" class="sidepanel">
          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
          <a href="{% url 'home' %}">Inicio </a>
+         <a>_________________</a>
          <ul class="menu"> 
          <li>
-         <a href="#about">Informacion</a>
-            <ul class="submenu">
-               <li><a href="{% url 'buses' %}">Buses</a></li>
-               <li><a href="{% url 'conductores' %}">Conductores</a></li>
-               <li><a href="{% url 'clientes' %}">Clientes</a></li>
-               <li><a href="{% url 'entregables' %}">Viajes</a></li>
+            <a href="#">Informacion</a>
+            {% if user.is_authenticated %}
+               <ul class="submenu">
+                  <li><a href="{% url 'buses' %}">Buses</a></li>
+                  <li><a href="{% url 'conductores' %}">Conductores</a></li>
+                  <li><a href="{% url 'clientes' %}">Clientes</a></li>
+                  <li><a href="{% url 'entregables' %}">Viajes</a></li>
+               </ul>
+               {% endif %}
+            </li>
             </ul>
-         </li>
-         </ul>
-         <a href="#service">Servicios</a>
-         <a href="#vehicles">Nuestros vehículos</a>
-         <a href="#testimonial">Trabajadores</a>
-         <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'usuariosRegistrados' %}">Usuarios</a>
+            <a href="{% url 'registrarUsuario' %}">Atencion al cleinte</a>
+            {% endif %}
+            <a href="#service">Servicios</a>
+            <a href="#vehicles">Nuestros vehículos</a>
+            <a href="#testimonial">Trabajadores</a>
+            <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
+            <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
+            {% endif %}
       </div>
       <!-- header -->
       <header>
@@ -73,8 +86,12 @@
                   <div class="col-md-8 col-sm-8">
                      <div class="right_bottun">
                         <ul class="conat_info d_none ">
+                           {% if not user.is_authenticated %}
                            <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                           {% endif %}
+                           {% if user.is_authenticated %}
                            <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                           {% endif %}
                         </ul>
                         <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
                      </div>
@@ -114,7 +131,7 @@
                                     </div>
                                  </div>
                                  <div class="col-md-6" >
-                                    <form action="{% url 'busesForm' %}" class="transfot action="" method="post"">
+                                    <form action="{% url 'busesForm' %}" class="transfot" method="post"">
                                        {% csrf_token %}
                                        <div class="col-md-12">
                                           <span>Somos Professional en Conducir</span>
@@ -122,14 +139,14 @@
                                        </div>
                                        <table>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre">
+                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Placa" maxlength="7" type="text" name="placa">
+                                          <input class="transfot_form" placeholder="Placa" maxlength="7" type="text" name="placa" required>
                                        </div>
                                        </table>
                                        <div class="col-md-12">
-                                          <button type="submit" class="get_now" onclick="window.location.href='{% url 'busesForm' %}';">Registrar</button>
+                                          <button type="submit" class="get_now" >Registrar</button>
                                        </div>
                                     </form>
                                  </div>
@@ -166,23 +183,23 @@
                                        </div>
                                        <table>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni">
+                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre">
+                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido">
+                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Email" type="text" name="email">
+                                          <input class="transfot_form" placeholder="Email" type="text" name="email" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Profesion" type="text" name="profesion">
+                                          <input class="transfot_form" placeholder="Profesion" type="text" name="profesion" required>
                                        </div>
                                        </table>
                                        <div class="col-md-12">
-                                          <button type="submit" class="get_now" onclick="window.location.href='{% url 'conductoresForm' %}';">Registrar</button>
+                                          <button type="submit" class="get_now" >Registrar</button>
                                        </div>
                                     </form>
                                  </div>
@@ -219,20 +236,20 @@
                                        </div>
                                        <table>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni">
+                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre">
+                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido">
+                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Email" type="text" name="email">
+                                          <input class="transfot_form" placeholder="Email" type="text" name="email" required>
                                        </div>
                                        </table>
                                        <div class="col-md-12">
-                                          <button type="submit" class="get_now" onclick="window.location.href='{% url 'clientesForm' %}';">Registrar</button>
+                                          <button type="submit" class="get_now" >Registrar</button>
                                        </div>
                                     </form>
                                  </div>
@@ -269,28 +286,28 @@
                                        </div>
                                        <table>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni">
+                                          <input class="transfot_form" placeholder="DNI" maxlength="8" type="text" name="dni" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre">
+                                          <input class="transfot_form" placeholder="Nombre" type="text" name="nombre" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido">
+                                          <input class="transfot_form" placeholder="Apellido" type="text" name="apellido" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Lugar de Partida" type="text" name="desde">
+                                          <input class="transfot_form" placeholder="Lugar de Partida" type="text" name="desde" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Lugar de Llegada" type="text" name="lugar">
+                                          <input class="transfot_form" placeholder="Lugar de Llegada" type="text" name="lugar" required>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Fecha" type="date" min="current" name="fechaEntrega">
+                                          <input class="transfot_form" placeholder="Fecha" type="date" min="current" name="fechaEntrega" required>
                                        </div>
-                                          <input type="checkbox" id="aceptar" name="entregado">
+                                          <input type="checkbox" id="aceptar" name="entregado" >
                                           <label class = "lebol" for="aceptar" >Viajar</label>
                                        </table>
                                        <div class="col-md-12">
-                                          <button type="submit" class="get_now" onclick="window.location.href='{% url 'entregablesForm' %}';">Registrar</button>
+                                          <button type="submit" class="get_now" >Registrar</button>
                                        </div>
                                     </form>
                                  </div>
@@ -392,6 +409,7 @@
                <li data-target="#veh" data-slide-to="0" class="active"></li>
                <li data-target="#veh" data-slide-to="1"></li>
                <li data-target="#veh" data-slide-to="2"></li>
+               <li data-target="#veh" data-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
                <div class="carousel-item active">
@@ -424,18 +442,18 @@
                         <div class="row">
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc1.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/track2.png' %}" alt="#"/></figure>
                               </div>
                            </div>
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc2.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/buses1.png' %}" alt="#"/></figure>
                               </div>
-                              <h3 class="blac_co">CAMIONES</h3>
+                              <h3 class="blac_co">BUSES</h3>
                            </div>
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc3.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/buses2.png' %}" alt="#"/></figure>
                               </div>
                            </div>
                         </div>
@@ -448,18 +466,42 @@
                         <div class="row">
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc1.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/camion1.png' %}" alt="#"/></figure>
                               </div>
                            </div>
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc2.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/camion2.png' %}" alt="#"/></figure>
                               </div>
                               <h3 class="blac_co">CAMIONES</h3>
                            </div>
                            <div class="col-md-4">
                               <div class="vehicles_truck">
-                                 <figure><img src="{% static 'images/truc3.png' %}" alt="#"/></figure>
+                                 <figure><img src="{% static 'images/camion3.png' %}" alt="#"/></figure>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item">
+                  <div class="container">
+                     <div class="carousel-caption">
+                        <div class="row">
+                           <div class="col-md-4">
+                              <div class="vehicles_truck">
+                                 <figure><img src="{% static 'images/buses3.png' %}" alt="#"/></figure>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="vehicles_truck">
+                                 <figure><img src="{% static 'images/buses4.png' %}" alt="#"/></figure>
+                              </div>
+                              <h3 class="blac_co">BUSES</h3>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="vehicles_truck">
+                                 <figure><img src="{% static 'images/buses5.png' %}" alt="#"/></figure>
                               </div>
                            </div>
                         </div>
@@ -636,7 +678,8 @@
                   </div>
                   <div class="col-md-7">
                      <div class="co_tru">
-                        <figure><img src="{% static 'images/truc4.png' %}" alt="#"/></figure>
+                        <figure><img src="{% static 'images/volvos1.png' %}" alt="#"/></figure>
+                        <figure><img src="{% static 'images/volvos.png' %}" alt="#"/></figure>
                      </div>
                   </div>
                </div>
@@ -673,7 +716,7 @@
                <div class="container">
                   <div class="row">
                      <div class="col-md-12">
-                        <p>© 2024 Todos los camiones<a href="#vehicles"> Camiones</a></p>
+                        <p>© 2024 Todos los Vehiculos<a href="#vehicles"> vehiculos</a></p>
                      </div>
                   </div>
                </div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Contrseña</title>
+    <link href="{% static 'css/cambiarcontraseña.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container" id="dataContainer">
+        <div >
+        <span class="close-btn" class="transfot" onclick="window.location.href='{% url 'home' %}';">x</span>
+        <h1>Cambiar contraseña</h1>
+
+        <div >
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cambiar Contraseña</button>
+        </form>
+        </div>
+    </div>
+
+       
+</body>
+</html>

@@ -1,5 +1,9 @@
+from django.contrib import admin
 from django.urls import path, include
 from entidades.views import *
+from . import views
+#from django.contrib.auth import logautView
+#from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', home, name = "home"),
@@ -29,7 +33,15 @@ urlpatterns = [
     path('buscarDni/', buscarDni, name="buscarDni"),
     path('encontrarDni/', encontrarDni, name="encontrarDni"),
     
+    path('usuariosRegistrados/', usuariosRegistrados, name='usuariosRegistrados'),
+    path('registrarUsuario/', registrarUsuario, name='registrarUsuario'),
+    path('usuarios/eliminar/<int:id_usuario>/', eliminarUsuario, name='eliminarUsuario'),
     
-    
-    
+    path('login/', iniciarSecion, name="login"),
+    path('cerrarsesion/', cerrarSesion, name='cerrarsesion'),
+    #path('logaut/', logautView.as_view(template_name= "entidades/logaut.html"), name="logaut"), 
+    path('registrar/', registrarUsuarios, name="registrar"),
+    path('cambiarContraseña/', cambiarContraseña, name='cambiarContraseña'),
+   
+ 
 ]

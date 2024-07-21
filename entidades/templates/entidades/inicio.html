@@ -1,21 +1,26 @@
 <!doctype html>
 <html lang="en">
+  
   <head>
     {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+  
     <link href="{% static 'css/bootstrap1.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome1.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+   
+    
 
     <title>LA MEJOR EMPRESA EN LOGÍSTICA</title>
   </head>
   <body>
+                    
     <section class="form-02-main">
-      <div class="container">
+      
+      <div class="container" id="registerFormContainer">
         <div class="row">
           <div class="col-md-12">
             <div class="_lk_de">
@@ -23,31 +28,47 @@
                 <div class="logo">
                   <img src="{% static 'images/user.png' %}">
                 </div>
+              <form action="{% url 'login' %}" class="transfot" method="POST">
+              
+                {% csrf_token %}
+                <strong>{% if messages %}
+                  {% for message in messages %}
+                      <div class="message {% if message.error %}{{ message.error }}{% endif %}">
+                          {{ message }}
+                      </div>
+                  {% endfor %}
+              {% endif %}</strong>
+               <table>
+                
                 <div class="form-group">
-                  <input type="email" name="email" class="form-control _ge_de_ol" type="text" placeholder="Ingresa Email" required="" aria-required="true">
-                </div>
-
-                <div class="form-group">
-                  <input type="password" name="password" class="form-control _ge_de_ol" type="text" placeholder="Ingresa Password" required="" aria-required="true">
-                </div>
-
-                <div class="checkbox form-group">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="">
-                    <label class="form-check-label" for="">
-                      Recordar
-                    </label>
-                  </div>
-                  <a href="#">Olvido la Contraña</a>
+                  <input type="text" name="username" class="form-control _ge_de_ol"  placeholder="Ingresa el nombre de usuario"   required>
                 </div>
 
                 <div class="form-group">
-                  <div class="_btn_04">
-                    <a href="#">Iniciar Secion</a>
-                  </div>
+                  <input type="password" name="password" class="form-control _ge_de_ol"  placeholder="Ingresa la contraseña"   required>
+                </div>
+                
+              </table>
+  
+                    <input class="_btn_04" type="submit" value="Iniciar sesión" >
+                
+              </form>
+
+              <div class="checkbox form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="">
+                  <label class="form-check-label" for="">
+                    Recordar
+                  </label>
+                </div>
+                <a  href="#" >¿Olvidaste tu Contraña?</a>
+              </div>
+
+                <div class="form-group">
+                    <button type="button" onclick="showDataContainer()">Crear nueva cuenta</button>
                 </div>
 
-                <div class="form-group nm_lk"><p>Iniciar secion con</p></div>
+                <div class="form-group nm_lk"><p>Iniciar sesión con</p></div>
 
                 <div class="form-group pt-0">
                   <div class="_social_04">
@@ -64,7 +85,54 @@
             </div>
           </div>
         </div>
+
+
       </div>
+      
     </section>
+        
+    <div class="data-container" id="dataContainer">
+      <div>
+      <span class="close-btn" onclick="closeForm()">x</span>
+      <h1>Registrarse</h1>
+      <p>Es rápido y fácil</p>
+          
+      <form action="{% url 'registrar' %}" class="transfot" method="POST" onsubmit="return validatePasswords()">
+        {% csrf_token %}
+        <table >
+          <input type="text" placeholder="Nombre de usuario"  name="username" required>
+          <input type="text" placeholder="Nombre"  name="first_name" required>
+          <input type="text" placeholder="Apellido"  name="last_name" required>
+          <input type="email" placeholder="Número de celular o correo electrónico" name="email" required>
+          <input type="password" placeholder="Nueva contraseña" id="password"  name="password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un símbolo especial." required>
+          <input type="password" placeholder="Confirmar contraseña" id="confirm_password" name="password2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un símbolo especial." required>
+        </table>
+        
+        <button type="submit" >Registrarse</button>
+
+      </form>
+    </div>
+    </div>
+      
+    <script>
+     
+      function showDataContainer() {
+          document.getElementById('registerFormContainer').classList.add('blurred');
+          document.getElementById('dataContainer').style.display = 'block';
+      }
+      function closeForm() {
+          document.getElementById('registerFormContainer').classList.remove('blurred');
+          document.getElementById('dataContainer').style.display = 'none';
+      }
+      function validatePasswords() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
+        if (password !== confirmPassword) {
+            alert("Las contraseñas no coinciden. Por favor, inténtelo de nuevo.");
+            return false;
+        }
+        return true;
+    }
+  </script>
   </body>
 </html>

@@ -28,6 +28,7 @@
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+     
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -42,21 +43,34 @@
       <div id="mySidepanel" class="sidepanel">
          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
          <a href="{% url 'home' %}">Inicio </a>
+         <a>_________________</a>
          <ul class="menu"> 
          <li>
-         <a href="#about">Informacion</a>
-            <ul class="submenu">
-               <li><a href="{% url 'buses'%}">Buses</a></li>
-               <li><a href="{% url 'conductores'%}">Conductores</a></li>
-               <li><a href="{% url 'clientes'%}">Clientes</a></li>
-               <li><a href="{% url 'entregables'%}">Viajes</a></li>
+            <a href="#">Informacion</a>
+            {% if user.is_authenticated %}
+               <ul class="submenu">
+                  <li><a href="{% url 'buses' %}">Buses</a></li>
+                  <li><a href="{% url 'conductores' %}">Conductores</a></li>
+                  <li><a href="{% url 'clientes' %}">Clientes</a></li>
+                  <li><a href="{% url 'entregables' %}">Viajes</a></li>
+               </ul>
+               {% endif %}
+            </li>
             </ul>
-         </li>
-         </ul>
-         <a href="#service">Servicios</a>
-         <a href="#vehicles">Nuestros vehículos</a>
-         <a href="#testimonial">Trabajadores</a>
-         <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'usuariosRegistrados' %}">Usuarios</a>
+            <a href="{% url 'registrarUsuario' %}">Atencion al cleinte</a>
+            {% endif %}
+            <a href="#service">Servicios</a>
+            <a href="#vehicles">Nuestros vehículos</a>
+            <a href="#testimonial">Trabajadores</a>
+            <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
+            <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
+            {% endif %}
       </div>
       <!-- header -->
       <header>
@@ -72,8 +86,12 @@
                   <div class="col-md-8 col-sm-8">
                      <div class="right_bottun">
                         <ul class="conat_info d_none ">
+                           {% if not user.is_authenticated %}
                            <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                           {% endif %}
+                           {% if user.is_authenticated %}
                            <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                           {% endif %}
                         </ul>
                         <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
                      </div>
@@ -85,13 +103,14 @@
             <form action="{% url 'encontrarDni' %}" method="get">
                 {% csrf_token %}
                 <table>
-                    <p>Ingrese el DNI para la buscar: <input type="text" name="buscar" id="buscar" maxlength="8" required></p>
-                    <input type="submit" value="Buscar">
+                  <div class="input-group mb-3">
+                     <input type="text" name="buscar" class="form-control" id="buscar"  placeholder="Buscar DNI" aria-label="Recipient's username" maxlength="8" aria-describedby="button-addon2" required>
+                     <button class="btn btn-outline-light" type="submit" id="button-addon2">Buscar</button>
+                   </div>      
                 </table>
+                
             </form>
             
-            
-
          </div>
       </header>
       <!-- end header inner -->
@@ -176,6 +195,8 @@
          function closeNav() {
            document.getElementById("mySidepanel").style.width = "0";
          }
+
+
       </script>
    </body>
 </html>

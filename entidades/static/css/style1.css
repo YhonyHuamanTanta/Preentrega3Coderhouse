@@ -1,12 +1,3 @@
-/* =======================================================================
-Template Name: Youtubers
-Author:  SmartEye Technologies
-Author URI: www.smarteyeapps.com
-Version: 1.0
-coder name:Prabin Raja
-Description: This Template is created for Youtubers
-======================================================================= */
-/* ===================================== Import Variables ================================== */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 @import url(https://fonts.googleapis.com/css?family=Arimo:300,400,400italic,700,700italic);
 /* ===================================== Basic CSS ==================================== */
@@ -16,9 +7,111 @@ Description: This Template is created for Youtubers
   list-style: none; 
 }
 
+
 body{
   font-family: "Open Sans";
+  background-color: #f0f2f5;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  
 }
+.data-container {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 35%;
+  transform: translate(25%, 25%);
+  background-color: #fff;
+  max-width: 380px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+ 
+  
+}
+
+.blurred {
+  filter: blur(5px);
+  opacity: 0.5;
+}
+
+
+
+h1 {
+  color: #0f98f8;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  
+  text-align: center;
+  font-size: 14px;
+  color: #83c3f1;
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], select {
+  
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.gender-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.gender-container label {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gender-container input {
+  display: none;
+}
+
+.gender-container label:hover, .gender-container input:checked + label {
+  background-color: #f0f2f5;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0f98f8;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #36a420;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
 
 img {
   max-width: 100%; 
@@ -114,6 +207,7 @@ textarea {
 }
 
 ._btn_04 {
+    
     display: inline-block;
     width: 100%;
     padding: 12px 0px;
@@ -128,6 +222,7 @@ textarea {
   font-size:15px;
   color:#fff;
 }
+
 
 ._social_04{
   display:block;
@@ -207,3 +302,6 @@ textarea {
     width: 100%;
   }
 }
+
+
+       

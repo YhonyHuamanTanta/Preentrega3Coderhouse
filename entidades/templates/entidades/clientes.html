@@ -43,21 +43,34 @@
       <div id="mySidepanel" class="sidepanel">
          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
          <a href="{% url 'home' %}">Inicio </a>
+         <a>_________________</a>
          <ul class="menu"> 
          <li>
-         <a href="#about">Informacion</a>
-            <ul class="submenu">
-               <li><a href="{% url 'buses'%}">Buses</a></li>
-               <li><a href="{% url 'conductores'%}">Conductores</a></li>
-               <li><a href="{% url 'clientes'%}">Clientes</a></li>
-               <li><a href="{% url 'entregables'%}">Viajes</a></li>
+            <a href="#">Informacion</a>
+            {% if user.is_authenticated %}
+               <ul class="submenu">
+                  <li><a href="{% url 'buses' %}">Buses</a></li>
+                  <li><a href="{% url 'conductores' %}">Conductores</a></li>
+                  <li><a href="{% url 'clientes' %}">Clientes</a></li>
+                  <li><a href="{% url 'entregables' %}">Viajes</a></li>
+               </ul>
+               {% endif %}
+            </li>
             </ul>
-         </li>
-         </ul>
-         <a href="#service">Servicios</a>
-         <a href="#vehicles">Nuestros vehículos</a>
-         <a href="#testimonial">Trabajadores</a>
-         <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'usuariosRegistrados' %}">Usuarios</a>
+            <a href="{% url 'registrarUsuario' %}">Atencion al cleinte</a>
+            {% endif %}
+            <a href="#service">Servicios</a>
+            <a href="#vehicles">Nuestros vehículos</a>
+            <a href="#testimonial">Trabajadores</a>
+            <a href="#contact">Contacto</a>
+            <a>_________________</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
+            <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
+            {% endif %}
       </div>
       <!-- header -->
       <header>
@@ -73,8 +86,12 @@
                   <div class="col-md-8 col-sm-8">
                      <div class="right_bottun">
                         <ul class="conat_info d_none ">
+                           {% if not user.is_authenticated %}
                            <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                           {% endif %}
+                           {% if user.is_authenticated %}
                            <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                           {% endif %}
                         </ul>
                         <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
                      </div>
@@ -82,7 +99,7 @@
                </div>
      
             </div>
-            <h1 style="color: #0f99f9; text-align: center;"" >CLIENTES REGISTRADOS</h1> 
+            <h1 style="color: #0f99f9; text-align: center;" >CLIENTES REGISTRADOS</h1> 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button type="button" class="btn btn-outline-light" onclick="window.location.href='{% url 'clientesForm' %}';">AÑANDIR CLIENTE +</button>
             </div>

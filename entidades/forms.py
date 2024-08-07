@@ -27,7 +27,16 @@ class EntregablesForm(forms.Form):
     lugar = forms.CharField(max_length=80)
     fechaEntrega = forms.DateField()
     entregado = forms.BooleanField()
-            
+    
+class AtenderClinetesForm(forms.Form):
+    dni = forms.CharField(max_length=8)
+    nombre = forms.CharField(max_length=50)
+    apellido = forms.CharField(max_length=60)
+    desde = forms.CharField(max_length=80)
+    llegada = forms.CharField(max_length=80)
+    nAsiento = forms.CharField(max_length=80)
+    costo = forms.CharField(max_length=7)
+                
 class RegistrarForm(UserCreationForm):
     first_name = forms.CharField(max_length=140, required=True)
     last_name = forms.CharField(max_length=140, required=False)

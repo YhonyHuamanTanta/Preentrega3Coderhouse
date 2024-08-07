@@ -42,6 +42,10 @@ urlpatterns = [
     #path('logaut/', logautView.as_view(template_name= "entidades/logaut.html"), name="logaut"), 
     path('registrar/', registrarUsuarios, name="registrar"),
     path('cambiarContraseña/', cambiarContraseña, name='cambiarContraseña'),
-   
- 
+    
+    path('verViajesClientes/', verViajesClientes, name = "verViajesClientes"),    
+    path('atenderClinetesForm/', atenderClinetesForm, name = "atenderClinetesForm"),
+    path('atenderClinetesDelete/<id_atenderclinetes>', atenderClinetesDelete, name = "atenderClinetesDelete"),
+    path('atenderClineteDelete/<id_atenderclinetes>', atenderClineteDelete, name = "atenderClineteDelete"),
+
 ]

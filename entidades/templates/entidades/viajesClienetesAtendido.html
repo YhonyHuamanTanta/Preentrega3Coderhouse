@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-   
+  
    <head>
       {% load static %}
       <!-- basic -->
@@ -103,57 +103,67 @@
                </div>
      
             </div>
-            <h1 style="color: #0f99f9; text-align: center;" >CLIENTES REGISTRADOS</h1> 
+            <h1 style="color: #0f99f9; text-align: center;" >VIAJES REGISTRODOS DE CLIENTES ATENDIDOS</h1>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-outline-light" onclick="window.location.href='{% url 'clientesForm' %}';">AÑANDIR CLIENTE +</button>
+               <button type="button" class="btn btn-outline-light" onclick="window.location.href='{% url 'registrarUsuario' %}';">AÑANDIR VIAJES +</button>
             </div>
        
             <table class="table table-striped">
-               <thead>
-                   <tr>
-                       <th>Id</th>
-                       <th>DNI</th>
-                       <th>Nombre</th>
-                       <th>Apellido</th>
-                       <th>Correo</th>
-                       <th>Acciones</th>
-                   </tr>
-               </thead>
-               <tbody>
-               {% for d in clientes %}
-                   <tr>
-                       <td>{{d.id}}</td>
-                       <td>{{d.dni}}</td>
-                       <td>{{d.nombre}}</td>
-                       <td>{{d.apellido}}</td>
-                       <td>{{d.email}}</td>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Lugar de Partida</th>
+                        <th>Lugar de Llegada</th>
+                        <th>Numero de Aciento</th>
+                        <th>Costo</th>                        
+                        <th>Fecha de Viaje</th>
+                        <th>Acciones</th>
 
-                       <td>
-                        <a
-                          href="{% url 'clientesUpdate' d.id %}"
-                          class="btn btn-primary"
-                          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                          ><i class="fa fa-edit fa-sm" title="Edit Record"></i>
-                        </a>
-                        <a
-                          href="{% url 'clientesDelete' d.id %}"
-                          class="btn btn-danger"
-                          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                          ><i class="fa fa-trash fa-sm" title="Delete Record"></i>
-                        </a>                
-                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for d in atenderclinetes  %}
+                    <tr>
+                        <td>{{ d.id }}</td>
+                        <td>{{ d.dni }}</td>
+                        <td>{{ d.nombre }}</td>
+                        <td>{{ d.apellido }}</td>
+                        <td>{{ d.desde }}</td>
+                        <td>{{ d.llegada }}</td>
+                        <td>{{ d.nAsiento }}</td>
+                        <td>{{ d.costo }}</td>
+                        <td>{{ d.date_joined|date:"d M Y H:i:s" }}</td>                      
+                           
+                    <td>
+                     <a
+                       href="#"
+                       class="btn btn-primary"
+                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                       ><i class="fa fa-edit fa-sm" title="Edit Record"></i>
+                     </a>
+                     <a
+                       href="{% url 'atenderClinetesDelete' d.id %}"
+                       class="btn btn-danger"
+                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                       ><i class="fa fa-trash fa-sm" title="Delete Record"></i>
+                     </a>                
+                     </td>
 
-                   </tr>
-               {% endfor %}
-               </tbody>
-           </table>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
 
          </div>
       </header>
       <!-- end header inner -->
       <!-- end header -->
       <!-- banner -->
-     </table>
+    
      
       <section class="banner_main">
          <div id="banner1" class="carousel slide banner_slide" data-ride="carousel">
@@ -232,6 +242,27 @@
          function closeNav() {
            document.getElementById("mySidepanel").style.width = "0";
          }
+         
+
+         function showDateTime() {
+            const date = new Date();
+            const dateString = date.toLocaleDateString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const timeString = date.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('date').innerText = dateString;
+            document.getElementById('time').innerText = timeString;
+        }
+
+        window.onload = showDateTime;
+        setInterval(showDateTime, 1000);  // Actualizar cada segundo
       </script>
    </body>
 </html>

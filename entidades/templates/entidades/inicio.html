@@ -29,27 +29,27 @@
                   <img src="{% static 'images/user.png' %}">
                 </div>
               <form action="{% url 'login' %}" class="transfot" method="POST">
-              
-                {% csrf_token %}
+                                                 
+                {% csrf_token %}    
+                            
                 <strong>{% if messages %}
                   {% for message in messages %}
-                      <div class="message {% if message.error %}{{ message.error }}{% endif %}">
+                  <div class="alert alert-danger" role="alert">
+                      <div class="message {% if message.error %}{{ message.error }}{% endif %}">                        
                           {{ message }}
                       </div>
-                  {% endfor %}
+                  </div>
+                  {% endfor %}                
               {% endif %}</strong>
-               <table>
-                
+              
+               <table>                
                 <div class="form-group">
                   <input type="text" name="username" class="form-control _ge_de_ol"  placeholder="Ingresa el nombre de usuario"   required>
                 </div>
-
                 <div class="form-group">
                   <input type="password" name="password" class="form-control _ge_de_ol"  placeholder="Ingresa la contraseña"   required>
                 </div>
-                
-              </table>
-  
+              </table>  
                     <input class="_btn_04" type="submit" value="Iniciar sesión" >
                 
               </form>
@@ -75,7 +75,7 @@
                     <ol>
                       <li><i class="fa fa-facebook"></i></li>
                       <li><i class="fa fa-twitter"></i></li>
-                      <li><i class="fa fa-google-plus"></i></li>
+                      <li><i class="fa fa-google-plus" href="https://accounts.google.com/v3/signin/identifier?authuser=0&continue=https%3A%2F%2Fwww.google.com%2F&ec=GAlAmgQ&hl=es&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S-1425605354%3A1722550831392303&ddm=0" target="blank"></i></li>
                       <li><i class="fa fa-instagram"></i></li>
                       <li><i class="fa fa-linkedin"></i></li>
                     </ol>
@@ -133,6 +133,9 @@
         }
         return true;
     }
+    
+ 
+
   </script>
   </body>
 </html>

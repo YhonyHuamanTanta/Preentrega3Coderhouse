@@ -23,6 +23,7 @@
       <link rel="stylesheet" href="{% static 'css/style2.css' %}">
       <link rel="stylesheet" href="{% static 'css/bus.css' %}">
       
+      
       <!-- fevicon -->
       <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
       <!-- Scrollbar Custom CSS -->
@@ -30,71 +31,138 @@
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
    </head>
    <!-- body -->
    <body class="main-layout">
-      <!-- loader  -->
-      <div class="loader_bg">
-         <div class="loader"><img src="{% static 'images/loading.gif' %}" alt="#" /></div>
-      </div>
-      <!-- end loader -->
-      <div id="mySidepanel" class="sidepanel">
-         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-         <a href="{% url 'home' %}">Inicio </a>
-         <a>_________________</a>
-         <ul class="menu"> 
-         <li>
-         <a href="#">Informacion</a>
-            <ul class="submenu">
-               <li><a href="{% url 'buses' %}">Buses</a></li>
-               <li><a href="{% url 'conductores' %}">Conductores</a></li>
-               <li><a href="{% url 'clientes' %}">Clientes</a></li>
-               <li><a href="{% url 'entregables' %}">Viajes</a></li>
-            </ul>
-         </li>
-         </ul>
-         <a>_________________</a>
-         <a href="{% url 'usuariosRegistrados' %}">Usuarios</a>
-         <a href="{% url 'registrarUsuario' %}">Atencion al cleinte</a>
-         <a href="#service">Servicios</a>
-         <a href="#vehicles">Nuestros vehículos</a>
-         <a href="#testimonial">Trabajadores</a>
-         <a href="#contact">Contacto</a>
-         <a>_________________</a>
-         <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
-         <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
-      </div>
-      <!-- header -->
-      <header>
-         <!-- header inner -->
-         <div class="header">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-md-4 col-sm-4">
-                     <div class="logo">
-                        <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="#" /></a>
-                     </div>
-                  </div>
-                  <div class="col-md-8 col-sm-8">
-                     <div class="right_bottun">
-                        <ul class="conat_info d_none ">
-                           <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                           <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        </ul>
-                        <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
-                     </div>
-                  </div>
-               </div>
-               <h1 style="color: #0f99f9; text-align: center;" > Atencion del cleinte</h1>
-     
+    <!-- loader  -->
+    <div class="loader_bg">
+       <div class="loader"><img src="{% static 'images/loading.gif' %}" alt="#" /></div>
+    </div>
+    <!-- end loader -->
+    <div id="mySidepanel" class="sidepanel">
+       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+       <a href="{% url 'home' %}">Inicio </a>
+       <a>_________________</a>
+       <ul class="menu"> 
+       <li>
+       <a href="#">Informacion</a>
+       {% if user.is_authenticated %}
+          <ul class="submenu">
+             <li><a href="{% url 'buses' %}">Buses</a></li>
+             <li><a href="{% url 'conductores' %}">Conductores</a></li>
+             <li><a href="{% url 'clientes' %}">Clientes</a></li>
+             <li><a href="{% url 'entregables' %}">Viajes</a></li>
+             <li><a href="{% url 'verViajesClientes' %}">Viajes de Clinetes</a></li>
+          </ul>
+          {% endif %}
+       </li>
+       </ul>
+       <a>_________________</a>
+       {% if user.is_authenticated %}
+       <a href="{% url 'usuariosRegistrados' %}">Usuarios</a>
+       <a href="{% url 'registrarUsuario' %}">Atencion al cleinte</a>
+       {% endif %}
+       <a href="#service">Servicios</a>
+       <a href="#vehicles">Nuestros vehículos</a>
+       <a href="#testimonial">Trabajadores</a>
+       <a href="#contact">Contacto</a>
+       <a>_________________</a>
+       {% if user.is_authenticated %}
+       <a href="{% url 'cambiarContraseña' %}">Cambiar Contraseña</a>
+       <a href="{% url 'cerrarsesion' %}">Cerrar Sesión</a>
+       {% endif %}
+    </div>
+    <!-- header -->
+    <header>
+       <!-- header inner -->
+       <div class="header">
+          <div class="container-fluid">
+             <div class="row">
+                <div class="col-md-4 col-sm-4">
+                   <div class="logo">
+                      <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="#" /></a>
+                   </div>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                   <div class="right_bottun">
+                      <ul class="conat_info d_none ">
+                        {% if user.is_authenticated %}
+                           <strong><li style="color: #ffffff; font-size: 17px; text-align: center;">{{ user.first_name }} {{ user.last_name }}</li></strong>
+                        {% endif %}
+                         {% if not user.is_authenticated %}
+                         <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                         {% endif %}
+                         {% if user.is_authenticated %}
+                         <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                         {% endif %}
+                      </ul>
+                      <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
+                   </div>
+                </div>
+             </div>
+   
+          </div>
+
+          <h1 style="color: #0f99f9; text-align: center;" >Atencion al Cliente</h1>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+             
+          </div>
+            
+
+          <div class="mapadiv" id= "registerFormContainer" >
+
+            <div class="overlay" id="overlay">              
+              <div class="container" id="dataContainer">   
+                <span position="absolute" onclick="closeForm()">x</span>
+                <h1 style="color: #0f99f9; text-align: center;">Ingresar los Datos</h1>                            
+                <form action="{% url 'atenderClinetesForm' %}" method="POST" class="transfot" onsubmit="return validatePasswords()">                  
+                  {% csrf_token %}                  
+                  <table >                     
+                    <div class="row g-3">
+                      <div class="col-sm">
+                        <input type="text" class="form-control" placeholder="DNI" aria-label="DNI" maxlength="8" name="dni" required>
+                      </div>
+
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" name="nombre" required>
+                      </div>
+
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido" id_last_name" name="apellido" required>
+                      </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control" placeholder="Partida" aria-label="Desde" name="desde" required>
+                        </div>
+
+                        <div class="col-sm">
+                          <input type="text" class="form-control" placeholder="Destino" aria-label="Llegada" name= "llegada" required>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm">
+                          <input type="text" class="form-control" placeholder="Asiento" aria-label="Asiento" maxlength="2" name="nAsiento" required>
+                        </div>
+                        <div class="col-sm">
+                          <input type="text" class="form-control" placeholder="Costo" aria-label="Costo" maxlength="3" name="costo" required>
+                        </div>                      
+                    </div>                    
+                      <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                      </div>                      
+                    </div>                    
+                  </table>   
+                </form>
+              </div>
             </div>
             
-            <div class="mapadiv"  id="registerFormContainer">
-              
-               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 2048.000000 735.000000"
                preserveAspectRatio="xMidYMid meet">
               <metadata>
@@ -136,7 +204,7 @@
               83 -130 135 -255 135 -65 0 -76 -3 -89 -22z"/>
               <path d="M19721 5783 c-66 -61 -30 -163 57 -163 48 0 88 29 97 71 20 91 -86
               155 -154 92z"/>
-              <a xlink:title="4" > 
+              <a xlink:title="4" onclick="showDataContainer()"> 
               <path d="M3926 6004 c-16 -16 -26 -38 -26 -55 0 -26 -3 -28 -47 -31 l-48 -3
               -15 -74 c-9 -41 -21 -76 -28 -79 -17 -5 -15 51 3 111 l14 47 -60 0 c-53 0 -63
               -3 -94 -32 -43 -40 -55 -94 -55 -244 0 -215 37 -276 164 -266 l43 4 -14 49
@@ -148,7 +216,7 @@
               -4 -56 0 -59 5 -59 107 0 66 3 79 25 105 32 37 32 72 0 103 -24 25 -26 25
               -208 25 l-184 0 -27 -26z"/>
             </a>
-              <a xlink:title="8" > 
+              <a xlink:title="8" onclick="showDataContainer()"> 
               <path d="M5310 6017 c-17 -9 -28 -25 -34 -54 -9 -41 -11 -42 -55 -45 l-45 -3
               -19 -77 c-11 -43 -23 -75 -28 -72 -11 7 -12 46 0 76 4 13 11 35 15 51 l6 27
               -61 0 c-58 0 -64 -2 -99 -38 -47 -46 -55 -94 -48 -281 7 -184 31 -221 146
@@ -160,7 +228,7 @@
               -133 5 -56 7 -106 3 -110 -4 -5 -29 -7 -56 -5 l-49 3 -2 85 c-1 76 1 89 24
               122 29 43 25 88 -10 113 -28 20 -358 22 -397 2z"/>
             </a>
-              <a xlink:title="12" > 
+              <a xlink:title="12" onclick="showDataContainer()"> 
               <path d="M6645 6005 c-16 -15 -25 -36 -25 -54 0 -29 -2 -30 -47 -33 l-48 -3
               -16 -64 c-9 -36 -21 -67 -27 -69 -16 -5 -15 21 2 86 l14 52 -54 0 c-100 0
               -135 -35 -153 -151 -14 -83 -14 -150 0 -245 10 -61 18 -83 41 -110 29 -32 33
@@ -172,7 +240,7 @@
               -48 -52 3 -53 3 -3 92 c-3 86 -1 93 23 117 28 28 30 43 14 79 -19 41 -48 47
               -235 47 -172 0 -175 0 -199 -25z"/>
             </a>
-              <a xlink:title="16" > 
+              <a xlink:title="16" onclick="showDataContainer()"> 
               <path d="M8015 6005 c-16 -15 -25 -36 -25 -55 0 -29 -1 -30 -48 -30 l-49 0
               -11 -51 c-7 -28 -12 -59 -12 -69 0 -22 -18 -36 -31 -23 -5 5 -1 36 10 76 l18
               67 -54 0 c-64 0 -107 -20 -127 -59 -22 -41 -39 -195 -32 -275 9 -99 25 -152
@@ -185,7 +253,7 @@
               -54 3 -54 3 -3 93 c-2 83 -1 95 17 110 37 32 28 106 -15 122 -14 6 -104 10
               -200 10 -172 0 -175 0 -199 -25z"/>
             </a>
-              <a xlink:title="20" > 
+              <a xlink:title="20" onclick="showDataContainer()"> 
               <path d="M9376 6009 c-19 -15 -26 -30 -26 -55 l0 -34 -49 0 -48 0 -17 -62
               c-25 -93 -25 -93 -37 -81 -8 8 -6 29 5 73 9 34 16 64 16 67 0 3 -29 3 -65 1
               -56 -3 -70 -8 -95 -33 -39 -39 -55 -138 -47 -291 8 -176 34 -214 144 -214 35
@@ -197,7 +265,7 @@
               -104 5 -110 -3 -6 -28 -11 -56 -11 l-49 0 0 98 c0 86 3 101 20 117 30 27 27
               78 -6 104 -25 19 -40 21 -204 21 -164 0 -179 -2 -204 -21z"/>
             </a>
-              <a xlink:title="24" > 
+              <a xlink:title="24" onclick="showDataContainer()"> 
               <path d="M10755 6018 c-30 -17 -44 -40 -45 -70 0 -26 -3 -28 -45 -28 -48 0
               -48 0 -70 -107 -6 -32 -21 -50 -31 -40 -6 5 10 101 21 130 6 15 0 17 -50 17
               -67 0 -108 -21 -129 -65 -26 -54 -39 -202 -26 -296 21 -149 45 -179 146 -179
@@ -208,7 +276,7 @@
               -103 4 -103 3 -95 -134 l7 -114 -52 0 -51 0 0 100 c0 89 2 100 20 110 31 17
               28 83 -6 109 -25 19 -40 21 -203 21 -114 -1 -183 -5 -196 -12z"/>
             </a>
-              <a xlink:title="28" > 
+              <a xlink:title="28" onclick="showDataContainer()"> 
             
               <path d="M12104 6018 c-24 -11 -44 -48 -44 -78 0 -17 -7 -20 -45 -20 -40 0
               -47 -3 -55 -26 -6 -14 -10 -35 -10 -47 0 -12 -5 -29 -10 -37 -19 -29 -28 9
@@ -221,7 +289,7 @@
               26 -169 4 -8 -10 -9 -47 -5 -125 l7 -111 -51 0 -52 0 0 96 c0 81 3 100 20 121
               27 34 25 69 -5 98 -24 25 -26 25 -202 24 -101 0 -187 -5 -199 -11z"/>
             </a>
-              <a xlink:title="32" > 
+              <a xlink:title="32" onclick="showDataContainer()"> 
               <path d="M13462 6014 c-13 -9 -24 -30 -28 -55 -6 -38 -7 -39 -50 -39 l-43 0
               -15 -52 c-8 -29 -18 -68 -21 -85 -6 -32 -18 -42 -29 -24 -5 7 11 80 30 144 5
               15 -2 17 -51 17 -65 0 -104 -19 -129 -60 -19 -33 -38 -200 -31 -268 15 -139
@@ -233,7 +301,7 @@
               -106 -15 -94 -83 5 -23 10 -69 12 -102 l3 -60 -55 0 -55 0 -1 90 c-1 80 2 93
               23 118 30 37 29 72 -2 102 -24 25 -26 25 -207 25 -150 0 -188 -3 -206 -16z"/>
             </a>
-              <a xlink:title="37" > 
+              <a xlink:title="37" onclick="showDataContainer()"> 
               <path d="M14865 6005 c-16 -15 -25 -36 -25 -54 0 -29 -2 -30 -47 -33 l-48 -3
               -15 -57 c-8 -31 -18 -60 -22 -64 -16 -16 -19 28 -5 76 l15 50 -57 0 c-60 0
               -111 -23 -130 -58 -21 -40 -34 -224 -22 -317 19 -138 43 -165 150 -165 l58 0
@@ -245,7 +313,7 @@
               c-60 0 -63 6 -63 114 0 58 4 72 25 98 14 16 25 36 25 44 0 24 -28 71 -45 78
               -9 3 -97 6 -196 6 -178 0 -180 0 -204 -25z"/>
             </a>
-              <a xlink:title="41" > 
+              <a xlink:title="41" onclick="showDataContainer()"> 
               <path d="M16215 6005 c-16 -15 -25 -36 -25 -55 0 -29 -1 -30 -49 -30 l-48 0
               -19 -85 c-11 -52 -23 -85 -31 -85 -17 0 -16 22 2 90 22 81 22 80 -39 80 -69 0
               -116 -30 -134 -85 -20 -58 -27 -237 -12 -323 17 -101 45 -129 136 -134 l66 -3
@@ -257,7 +325,7 @@
               c-3 80 -1 91 19 112 32 34 29 81 -5 111 -26 22 -33 23 -207 23 -178 0 -180 0
               -204 -25z"/>
             </a>
-              <a xlink:title="45" > 
+              <a xlink:title="45" onclick="showDataContainer()"> 
               <path d="M17586 6009 c-19 -15 -26 -30 -26 -55 l0 -34 -49 0 c-55 0 -52 4 -72
               -98 -6 -34 -16 -65 -20 -68 -19 -11 -21 29 -5 91 9 35 16 67 16 70 0 3 -23 5
               -50 5 -61 0 -105 -20 -124 -59 -25 -48 -39 -159 -33 -261 8 -115 19 -159 52
@@ -282,7 +350,7 @@
               41 4 3 -12 14 -20 26 -20 19 0 21 6 21 50 0 38 4 50 15 50 9 0 20 11 26 24 16
               35 -3 66 -42 66 -19 0 -45 12 -71 33 -37 30 -46 32 -128 35 -56 3 -90 0 -94
               -7z"/>
-              <a xlink:title="3" > 
+              <a xlink:title="3" onclick="showDataContainer()"> 
               <path d="M3925 5160 c-9 -10 -20 -34 -24 -51 -6 -29 -11 -33 -46 -36 -21 -1
               -42 -6 -47 -11 -4 -4 -14 -40 -21 -80 -15 -77 -31 -108 -42 -79 -4 9 2 49 12
               90 l19 75 -51 5 c-61 6 -100 -13 -130 -63 -18 -32 -20 -52 -20 -205 0 -153 2
@@ -294,7 +362,7 @@
               -28 9 -72 12 -98 l5 -48 -53 0 c-63 0 -65 3 -65 107 0 68 3 78 25 99 31 28 33
               72 5 102 -20 21 -28 22 -214 22 -179 0 -194 -1 -211 -20z"/>
             </a>
-              <a xlink:title="7" > 
+              <a xlink:title="7" onclick="showDataContainer()"> 
               <path d="M5295 5160 c-9 -10 -20 -33 -24 -51 -6 -28 -11 -32 -44 -35 -50 -4
               -53 -7 -66 -59 -7 -26 -17 -45 -25 -45 -12 0 -12 8 0 53 7 28 14 54 14 56 0 2
               -27 1 -60 -1 -39 -3 -70 -11 -88 -25 -51 -38 -57 -63 -57 -248 0 -192 9 -224
@@ -306,7 +374,7 @@
               l5 -48 -57 3 -56 3 -3 88 c-3 82 -1 90 23 118 14 17 25 37 25 45 0 19 -19 57
               -34 66 -6 4 -97 8 -202 8 -177 0 -192 -1 -209 -20z"/>
             </a>
-              <a xlink:title="11" > 
+              <a xlink:title="11" onclick="showDataContainer()"> 
               <path d="M6642 5160 c-13 -12 -22 -33 -22 -50 0 -27 -2 -29 -47 -32 l-48 -3
               -19 -78 c-13 -56 -21 -76 -29 -68 -8 8 -7 28 1 71 7 33 10 64 7 69 -2 5 -31 7
               -62 4 -81 -7 -111 -37 -129 -130 -23 -120 -12 -299 22 -351 25 -39 74 -62 131
@@ -317,7 +385,7 @@
               -95 0 -104 -9 -89 -91 6 -28 10 -74 10 -100 l0 -49 -55 0 -55 0 0 91 c0 83 2
               94 25 121 30 36 31 57 4 92 l-20 26 -193 0 c-180 0 -194 -1 -214 -20z"/>
             </a>
-              <a xlink:title="15" > 
+              <a xlink:title="15" onclick="showDataContainer()"> 
 
               <path d="M8012 5160 c-13 -12 -22 -33 -22 -50 0 -27 -2 -29 -47 -32 l-48 -3
               -15 -57 c-9 -37 -19 -58 -28 -58 -11 0 -13 8 -8 30 3 17 9 44 13 62 l6 31 -64
@@ -330,7 +398,7 @@
               10 -106 l0 -38 -55 0 -55 0 0 93 c0 79 3 97 19 111 28 25 32 72 9 102 -19 24
               -20 24 -212 24 -180 0 -194 -1 -214 -20z"/>
             </a>
-              <a xlink:title="19" > 
+              <a xlink:title="19" onclick="showDataContainer()"> 
               <path d="M9367 5162 c-10 -10 -17 -33 -17 -50 0 -33 -2 -34 -70 -36 -22 -1
               -28 -10 -45 -64 -10 -34 -25 -62 -32 -62 -16 0 -16 6 2 65 8 27 12 52 9 55
               -13 12 -130 -2 -148 -18 -44 -41 -50 -69 -51 -242 0 -145 2 -170 20 -205 25
@@ -342,7 +410,7 @@
               c0 82 3 98 20 115 11 11 20 33 20 50 0 17 -9 39 -20 50 -19 19 -33 20 -213 20
               -175 0 -196 -2 -210 -18z"/>
             </a>
-              <a xlink:title="23" > 
+              <a xlink:title="23" onclick="showDataContainer()"> 
               <path d="M10731 5154 c-12 -15 -21 -39 -21 -54 0 -23 -4 -27 -20 -23 -30 8
               -68 -5 -74 -25 -3 -9 -10 -36 -16 -59 -6 -26 -17 -43 -26 -43 -15 0 -14 7 6
               88 11 41 -1 47 -67 38 -90 -12 -113 -44 -133 -182 -14 -96 -1 -235 27 -293 22
@@ -353,7 +421,7 @@
               378 -13 57 -31 66 -125 63 l-80 -3 4 -117 3 -118 -51 0 -51 0 0 95 c0 82 3 98
               20 115 28 28 27 84 -2 104 -18 13 -57 16 -214 16 l-193 0 -20 -26z"/>
             </a>
-              <a xlink:title="27" > 
+              <a xlink:title="27" onclick="showDataContainer()"> 
               <path d="M12085 5155 c-14 -13 -25 -36 -25 -50 0 -23 -4 -25 -44 -25 -41 0
               -45 -2 -54 -32 -6 -18 -13 -51 -17 -73 -9 -56 -15 -75 -25 -75 -18 0 -18 33
               -2 99 l18 69 -49 4 c-127 8 -152 -38 -152 -277 0 -181 10 -215 75 -247 44 -23
@@ -365,7 +433,7 @@
               -104 l5 -53 -54 0 -55 0 0 95 c0 82 3 99 20 117 11 12 20 34 20 50 0 15 -9 37
               -20 48 -19 19 -33 20 -210 20 -189 0 -191 0 -215 -25z"/>
             </a>
-              <a xlink:title="31" > 
+              <a xlink:title="31" onclick="showDataContainer()"> 
               <path d="M13450 5153 c-13 -16 -20 -37 -17 -50 4 -21 1 -23 -44 -23 l-48 0
               -16 -52 c-8 -28 -15 -60 -15 -70 0 -10 -7 -18 -15 -18 -19 0 -19 24 -1 83 8
               26 13 47 13 48 -1 0 -28 1 -59 2 -68 1 -100 -14 -122 -57 -18 -34 -35 -186
@@ -377,7 +445,7 @@
               -3 0 -50 c0 -27 4 -80 8 -117 l9 -68 -56 0 c-65 0 -68 5 -65 112 1 56 6 77 20
               91 30 28 34 65 12 95 l-20 27 -196 3 -195 2 -22 -27z"/>
             </a>
-              <a xlink:title="36" > 
+              <a xlink:title="36" onclick="showDataContainer()"> 
               <path d="M14874 5172 c-18 -11 -34 -49 -34 -77 0 -22 -3 -25 -25 -19 -57 14
               -72 0 -90 -81 -10 -41 -21 -75 -26 -75 -13 0 -11 59 5 110 l14 45 -57 -1
               c-119 -2 -139 -30 -157 -217 -7 -76 11 -228 32 -268 16 -33 79 -59 139 -59 25
@@ -389,7 +457,7 @@
               -48 -52 0 -53 0 3 97 c3 78 7 102 23 122 22 28 19 63 -8 94 -14 15 -38 17
               -207 17 -105 0 -196 -4 -202 -8z"/>
             </a>
-              <a xlink:title="40" > 
+              <a xlink:title="40" onclick="showDataContainer()"> 
               <path d="M16210 5160 c-11 -11 -20 -33 -20 -49 0 -28 -2 -30 -47 -33 l-48 -3
               -18 -75 c-21 -83 -23 -88 -37 -74 -6 6 -4 31 5 69 21 88 23 84 -45 81 -120 -5
               -143 -49 -144 -271 -1 -220 23 -264 144 -273 66 -5 66 -5 51 61 -14 57 15 48
@@ -400,7 +468,7 @@
               10 -83 10 -106 l0 -43 -55 0 -55 0 0 91 c0 83 2 94 26 122 28 33 27 66 -3 100
               -14 15 -38 17 -210 17 -180 0 -194 -1 -213 -20z"/>
             </a>
-              <a xlink:title="44" > 
+              <a xlink:title="44" onclick="showDataContainer()"> 
               <path d="M17583 5165 c-14 -10 -23 -28 -25 -52 l-3 -37 -46 2 -47 3 -14 -57
               c-16 -69 -45 -90 -35 -26 4 22 10 47 13 56 5 14 -3 16 -56 16 -71 0 -94 -10
               -114 -48 -46 -91 -45 -354 2 -434 21 -36 69 -58 127 -58 44 0 47 1 41 23 -14
@@ -422,7 +490,8 @@
               -3 -3 -122 -3 -123 187 0 187 0 38 40 c42 44 59 50 59 20 0 -13 7 -20 20 -20
               17 0 20 7 20 44 0 36 5 47 25 60 52 34 21 105 -40 90 -15 -4 -25 -2 -25 4 0 6
               -19 22 -43 36 -47 28 -171 45 -196 28z"/>
-              <a xlink:title="10" > 
+
+              <a xlink:title="10" onclick="showDataContainer()"> 
               <path d="M6830 2953 c-164 -3 -176 -4 -192 -24 -10 -12 -18 -34 -18 -50 0 -26
               -3 -28 -47 -31 l-48 -3 -22 -85 c-11 -47 -22 -87 -22 -90 -1 -2 -6 1 -12 7 -7
               7 -5 30 5 77 23 98 24 96 -39 96 -46 0 -59 -4 -90 -31 -48 -42 -59 -89 -59
@@ -434,7 +503,7 @@
               -93 -45 2 -11 7 -59 10 -107 l7 -88 -57 0 -56 0 0 95 c0 87 2 96 25 119 14 14
               25 37 25 51 0 24 -31 65 -49 65 -5 0 -15 1 -23 3 -7 1 -92 1 -188 0z"/>
             </a>
-              <a xlink:title="18" > 
+              <a xlink:title="18" onclick="showDataContainer()"> 
               <path d="M9550 2952 c-154 -2 -166 -4 -182 -23 -10 -12 -18 -34 -18 -50 0 -28
               -2 -29 -49 -29 l-49 0 -15 -62 c-9 -35 -19 -75 -22 -90 -3 -16 -10 -28 -15
               -28 -14 0 -12 47 5 113 8 32 15 60 15 62 0 15 -109 3 -137 -15 -60 -36 -68
@@ -446,7 +515,7 @@
               23 -102 20 l-87 -3 0 -40 c1 -22 5 -75 9 -117 l8 -78 -56 0 -56 0 0 95 c0 82
               3 98 20 115 26 26 26 81 1 104 -23 21 -36 22 -241 18z"/>
             </a>
-              <a xlink:title="30" > 
+              <a xlink:title="30" onclick="showDataContainer()"> 
               <path d="M13479 2949 c-29 -11 -55 -59 -45 -84 4 -12 -4 -15 -44 -15 l-49 0
               -16 -52 c-8 -28 -15 -60 -15 -69 0 -19 -17 -35 -27 -25 -6 6 10 97 23 130 7
               17 2 18 -59 14 -67 -4 -103 -24 -127 -69 -18 -33 -30 -214 -19 -305 11 -97 24
@@ -458,7 +527,7 @@
               -106 -4 -8 -23 -13 -55 -13 -58 0 -61 4 -61 104 0 61 4 77 25 106 30 41 32 73
               5 100 -18 18 -33 20 -184 20 -90 0 -170 2 -178 4 -7 3 -25 0 -39 -5z"/>
             </a>
-              <a xlink:title="35" > 
+              <a xlink:title="35" onclick="showDataContainer()"> 
               <path d="M14880 2944 c-29 -13 -40 -32 -40 -69 0 -21 -5 -24 -47 -27 -52 -3
               -51 -2 -78 -122 -4 -22 -9 -26 -18 -17 -11 11 -1 80 18 124 6 15 1 17 -45 17
               -63 0 -110 -21 -133 -59 -27 -47 -42 -215 -28 -319 7 -48 19 -97 27 -110 25
@@ -470,7 +539,7 @@
               -32 11 -79 11 -106 l0 -48 -50 0 -50 0 0 99 c0 72 4 102 14 110 27 22 26 81
               -1 111 -10 11 -377 15 -403 4z"/>
             </a>
-              <a xlink:title="2" > 
+              <a xlink:title="2" onclick="showDataContainer()"> 
               <path d="M3927 2936 c-10 -8 -21 -30 -24 -49 -5 -35 -7 -36 -51 -39 l-46 -3
               -16 -74 c-9 -41 -21 -76 -28 -79 -17 -5 -15 44 3 104 8 27 15 51 15 53 0 2
               -29 1 -65 -1 -115 -7 -144 -60 -146 -271 -1 -99 11 -179 32 -219 18 -34 70
@@ -482,7 +551,7 @@
               -185 -2 -3 -26 -5 -52 -5 -57 0 -59 4 -59 110 0 68 3 81 20 90 27 15 37 73 16
               105 l-16 25 -198 0 c-150 -1 -201 -4 -215 -14z"/>
             </a>
-              <a xlink:title="6" > 
+              <a xlink:title="6" onclick="showDataContainer()"> 
               <path d="M5296 2934 c-19 -18 -31 -59 -22 -73 4 -6 -14 -11 -46 -13 l-53 -3
               -16 -72 c-18 -78 -26 -96 -38 -88 -9 5 0 63 19 125 5 19 10 37 10 39 0 2 -29
               1 -65 -1 -56 -3 -70 -8 -95 -34 -41 -41 -53 -115 -48 -285 5 -122 8 -140 28
@@ -494,7 +563,7 @@
               -28 -2 -62 5 -27 11 -74 13 -104 l3 -55 -53 0 -53 0 -2 91 c-1 80 2 94 21 119
               28 35 28 69 0 95 -20 19 -34 20 -214 20 -162 0 -195 -3 -208 -16z"/>
             </a>
-              <a xlink:title="14" > 
+              <a xlink:title="14" onclick="showDataContainer()"> 
               <path d="M8006 2928 c-9 -12 -16 -35 -16 -50 0 -27 -2 -28 -49 -28 l-49 0 -11
               -47 c-5 -27 -13 -63 -16 -80 -4 -19 -13 -33 -21 -33 -17 0 -17 10 1 85 8 33
               14 63 15 68 0 11 -96 8 -125 -5 -41 -19 -63 -66 -76 -167 -15 -108 -1 -263 28
@@ -506,7 +575,7 @@
               -1 -82 5 -38 10 -86 10 -106 l0 -38 -55 0 -55 0 0 92 c0 76 3 95 19 112 17 19
               25 49 22 83 -1 6 -8 19 -17 27 -13 14 -47 16 -214 16 -194 0 -199 -1 -214 -22z"/>
             </a>
-              <a xlink:title="22" > 
+              <a xlink:title="22" onclick="showDataContainer()"> 
               <path d="M10738 2939 c-10 -5 -21 -28 -24 -49 -6 -39 -7 -40 -50 -40 -47 0
               -45 5 -71 -114 -9 -44 -33 -61 -33 -24 0 24 11 75 25 117 7 23 7 23 -59 19
               -80 -5 -110 -28 -131 -103 -31 -111 -26 -285 10 -372 20 -46 68 -73 134 -73
@@ -518,7 +587,7 @@
               100 -16 15 -46 17 -213 17 -113 0 -201 -5 -211 -11z"/>
             </a>
 
-              <a xlink:title="26" > 
+              <a xlink:title="26" onclick="showDataContainer()"> 
               <path d="M12094 2942 c-16 -11 -34 -48 -34 -71 0 -18 -6 -21 -44 -21 -40 0
               -45 -3 -55 -31 -6 -18 -11 -40 -11 -50 0 -10 -5 -30 -10 -45 -8 -20 -14 -24
               -22 -16 -11 11 -2 74 18 126 7 18 3 19 -62 13 -60 -4 -72 -9 -95 -35 -17 -19
@@ -532,7 +601,7 @@
               0 96 c0 72 4 100 15 111 24 24 30 65 14 93 l-15 26 -199 2 c-110 2 -205 0
               -211 -5z"/>
             </a>
-              <a xlink:title="39" > 
+              <a xlink:title="39" onclick="showDataContainer()"> 
               <path d="M16206 2928 c-9 -12 -16 -35 -16 -50 0 -25 -3 -27 -47 -30 l-48 -3
               -16 -59 c-8 -33 -21 -62 -29 -64 -13 -5 -12 11 6 96 l7 32 -52 0 c-97 0 -135
               -37 -151 -147 -20 -141 -8 -297 28 -352 21 -31 70 -51 128 -51 l47 0 -7 33
@@ -544,7 +613,7 @@
               0 -55 0 0 90 c0 79 3 93 25 126 30 45 31 54 4 88 l-20 26 -199 0 c-194 0 -199
               -1 -214 -22z"/>
             </a>
-              <a xlink:title="43" > 
+              <a xlink:title="43" onclick="showDataContainer()"> 
               <path d="M17577 2932 c-10 -10 -17 -33 -17 -50 0 -31 -1 -32 -44 -32 -24 0
               -48 -6 -53 -12 -6 -7 -15 -40 -22 -73 -11 -58 -25 -85 -37 -73 -5 6 4 62 22
               135 6 21 3 23 -40 23 -62 0 -111 -22 -129 -57 -49 -95 -47 -357 3 -439 25 -39
@@ -567,7 +636,8 @@
               -120 3 -126 4 -5 81 -8 194 -6 l187 3 32 38 c34 41 56 48 56 17 0 -13 7 -20
               20 -20 17 0 20 7 20 48 0 39 4 49 23 57 49 22 19 101 -34 88 -13 -4 -30 3 -47
               19 -44 41 -66 48 -152 48 -72 0 -81 -2 -78 -17z"/>
-              <a xlink:title="1" onclick="showDataContainer()"> 
+
+              <a xlink:title="1" id="circle" onclick="showDataContainer()">               
               <path d="M3921 2084 c-12 -15 -21 -38 -21 -53 0 -24 -3 -26 -47 -26 l-47 -1
               -16 -74 c-9 -40 -21 -75 -28 -78 -17 -5 -15 44 3 104 8 27 15 51 15 53 0 2
               -28 1 -62 -3 -126 -13 -143 -46 -143 -276 1 -135 4 -172 18 -203 21 -46 64
@@ -579,7 +649,7 @@
               -53 0 c-35 0 -53 4 -54 13 0 6 0 49 1 95 1 68 5 87 21 103 25 25 24 74 -1 99
               -19 19 -33 20 -214 20 l-195 0 -20 -26z"/>
             </a>
-              <a xlink:title="5" > 
+              <a xlink:title="5" onclick="showDataContainer()"> 
               <path d="M5296 2091 c-9 -10 -19 -34 -22 -52 -6 -33 -7 -34 -49 -31 l-44 4
               -14 -48 c-16 -57 -44 -77 -33 -23 15 66 16 64 -49 62 -66 -2 -100 -21 -125
               -69 -12 -23 -15 -68 -15 -204 0 -201 8 -227 77 -255 31 -12 128 -22 128 -12 0
@@ -592,7 +662,7 @@
               l-20 27 -195 3 c-180 2 -196 1 -212 -17z"/>
             </a>
 
-              <a xlink:title="9" > 
+              <a xlink:title="9" onclick="showDataContainer()"> 
               <path d="M6646 2095 c-10 -8 -22 -31 -25 -52 -6 -36 -8 -38 -51 -43 l-45 -5
               -16 -59 c-18 -69 -47 -94 -34 -30 11 51 12 93 3 94 -90 3 -109 -1 -139 -28
               -25 -23 -34 -41 -45 -98 -16 -84 -17 -177 -3 -263 12 -80 31 -116 69 -136 28
@@ -605,7 +675,7 @@
               62 0 93 -24 25 -26 25 -212 25 -148 -1 -192 -4 -207 -15z"/>
             </a>
 
-              <a xlink:title="13" > 
+              <a xlink:title="13" onclick="showDataContainer()"> 
               <path d="M8013 2088 c-12 -13 -23 -36 -25 -53 -3 -28 -6 -30 -38 -27 -19 1
               -41 -1 -48 -6 -7 -5 -19 -39 -26 -76 -16 -74 -21 -85 -36 -70 -6 6 -4 31 5 69
               22 91 23 88 -42 80 -31 -3 -65 -11 -74 -16 -61 -32 -92 -181 -71 -345 14 -109
@@ -617,7 +687,7 @@
               -107 -6 -91 -100 6 -38 11 -85 11 -104 l0 -36 -55 0 -55 0 0 93 c0 81 3 96 20
               112 26 24 27 86 2 108 -16 15 -46 17 -209 17 -184 0 -190 -1 -210 -22z"/>
             </a>
-              <a xlink:title="17" > 
+              <a xlink:title="17" onclick="showDataContainer()"> 
 
               <path d="M9370 2090 c-11 -11 -20 -33 -20 -49 0 -34 -12 -40 -57 -33 -30 4
               -34 1 -47 -29 -8 -19 -17 -55 -21 -82 -4 -26 -11 -50 -16 -53 -19 -11 -22 32
@@ -630,7 +700,7 @@
               -130 19 -122 -44 -122 l-55 0 0 91 c0 76 3 95 20 116 26 33 25 73 0 101 -20
               21 -28 22 -210 22 -177 0 -191 -1 -210 -20z"/>
             </a>
-              <a xlink:title="21" > 
+              <a xlink:title="21" onclick="showDataContainer()"> 
               <path d="M10740 2092 c-12 -9 -25 -33 -29 -52 -7 -34 -9 -35 -48 -34 l-42 2
               -19 -81 c-10 -45 -24 -83 -30 -85 -15 -5 -15 18 2 98 8 36 13 65 12 65 0 1
               -29 -1 -63 -3 -83 -5 -115 -33 -134 -117 -17 -81 -17 -226 0 -302 21 -94 57
@@ -642,7 +712,7 @@
               -85 -12 -8 -8 -10 -43 -5 -120 l6 -108 -51 0 -52 0 0 95 c0 82 3 98 20 115 27
               27 26 74 -2 100 -20 19 -34 20 -209 20 -164 0 -189 -2 -209 -18z"/>
             </a>
-              <a xlink:title="25" > 
+              <a xlink:title="25" onclick="showDataContainer()"> 
               <path d="M12081 2084 c-12 -15 -21 -37 -21 -50 0 -24 -11 -30 -70 -36 -22 -3
               -26 -11 -38 -65 -9 -41 -19 -63 -28 -63 -18 0 -18 24 1 86 8 27 15 51 15 53 0
               2 -28 1 -62 -3 -107 -11 -132 -46 -147 -207 -9 -97 1 -204 25 -267 19 -50 59
@@ -654,7 +724,7 @@
               5 -96 -2 -6 -26 -11 -53 -11 l-49 0 0 95 c0 82 3 98 20 115 11 11 20 33 20 50
               0 17 -9 39 -20 50 -19 19 -33 20 -214 20 l-195 0 -20 -26z"/>
             </a>
-              <a xlink:title="29" > 
+              <a xlink:title="29" onclick="showDataContainer()"> 
               <path d="M13457 2093 c-8 -10 -19 -34 -24 -53 -9 -33 -11 -34 -50 -32 l-42 3
               -15 -52 c-9 -29 -16 -61 -16 -71 0 -10 -7 -18 -15 -18 -18 0 -19 11 -1 78 17
               63 12 68 -62 57 -58 -9 -75 -18 -101 -53 -43 -61 -47 -353 -5 -433 19 -38 67
@@ -667,7 +737,8 @@
               88 c-3 84 -1 90 23 113 30 28 32 62 4 98 l-20 26 -193 0 c-171 0 -195 -2 -209
               -17z"/>
             </a>
-              <a xlink:title="34" > 
+
+              <a xlink:title="34" onclick="showDataContainer()"> 
               <path d="M14863 2090 c-10 -11 -20 -35 -23 -52 -5 -30 -7 -32 -49 -32 l-45 -1
               -17 -68 c-18 -72 -24 -85 -36 -73 -6 6 0 45 19 126 8 37 -122 18 -161 -24 -40
               -42 -59 -199 -41 -338 13 -105 27 -134 75 -154 39 -16 125 -19 125 -5 0 6 -7
@@ -680,7 +751,7 @@
               37 37 69 14 99 l-20 27 -196 3 c-187 2 -198 1 -214 -18z"/>
             </a>
               
-              <a xlink:title="38" > 
+              <a xlink:title="38" onclick="showDataContainer()"> 
             
               <path d="M16210 2088 c-11 -12 -20 -34 -20 -49 0 -26 -3 -28 -47 -31 l-48 -3
               -14 -52 c-9 -34 -19 -53 -29 -53 -8 0 -12 6 -9 14 3 8 9 30 12 50 7 34 6 35
@@ -694,7 +765,7 @@
               112 31 34 31 76 1 106 -19 19 -33 20 -210 20 -182 0 -190 -1 -210 -22z"/>
             </a>
            
-            <a xlink:title="42" > 
+            <a xlink:title="42" onclick="showDataContainer()"> 
               <path d="M17582 2094 c-15 -11 -22 -25 -22 -49 0 -29 -4 -36 -25 -41 -14 -3
               -36 -4 -50 -2 -23 5 -25 1 -36 -53 -6 -32 -18 -67 -26 -76 -13 -16 -14 -13 -9
               32 4 28 9 61 12 75 5 23 2 26 -26 28 -50 4 -107 -16 -133 -47 -33 -39 -52
@@ -725,16 +796,14 @@
               <path d="M19723 1575 c-12 -8 -27 -31 -33 -50 -10 -30 -9 -40 7 -68 36 -62
               100 -71 149 -22 34 34 33 97 -1 130 -28 29 -88 34 -122 10z"/>
               </g>
-              </svg>
-             </div>
-                  
-        
-      </header>
-      
+            </svg>
+          </div>           
+            
+      </header>    
+
       <!-- end header inner -->
       <!-- end header -->
-      <!-- banner -->
-     
+      <!-- banner -->     
      
       <section class="banner_main">
          <div id="banner1" class="carousel slide banner_slide" data-ride="carousel">
@@ -753,7 +822,7 @@
                                  </div>
                                  <div class="col-md-6">
                                     <form class="transfot">
-
+ 
                                     </form>
                                  </div>
                               </div>
@@ -767,7 +836,53 @@
            
          </div>
       </section>
-      <h1 style="color: #0f99f9; text-align: center;" > En proceso...</h1>
+
+      <table class="table table-striped table-hover">
+
+        <thead>
+          <tr>
+              <th>Id</th>
+              <th>DNI</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Lugar de Partida</th>
+              <th>Lugar de Llegada</th>
+              <th>Numero de Aciento</th>
+              <th>Costo</th>                        
+              <th>Fecha de Viaje</th>
+              <th>Acciones</th>
+
+          </tr>
+      </thead>
+      <tbody>
+      {% for d in atenderclinetes  %}
+          <tr>
+              <td>{{ d.id }}</td>
+              <td>{{ d.dni }}</td>
+              <td>{{ d.nombre }}</td>
+              <td>{{ d.apellido }}</td>
+              <td>{{ d.desde }}</td>
+              <td>{{ d.llegada }}</td>
+              <td>{{ d.nAsiento }}</td>
+              <td>{{ d.costo }}</td>
+              <td>{{ d.date_joined|date:"d M Y H:i:s" }}</td>
+              
+              
+              
+          <td>
+            <form action="{% url 'atenderClineteDelete' d.id %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-primary" type="submit" >Eliminar</button>
+          </form>              
+           </td>
+
+          </tr>
+
+      {% endfor %}
+      </tbody>
+
+      </table>
+       
       <!-- end banner -->
       <!-- about section -->
       
@@ -806,37 +921,62 @@
       <!-- sidebar -->
       <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
       <script src="{% static 'js/custom.js' %}"></script>
+      <script src="scripts.js"></script>
 
-      <div class="data-container" id="dataContainer">
-        <div>
-        <span class="close-btn" onclick="closeForm()">x</span>
-        <h1>Ingresar los Datos</h1>
-                    
-        <form action="#" class="transfot" method="POST" onsubmit="return validatePasswords()">
-          {% csrf_token %}
-          <table >
-            <input placeholder="DNI" maxlength="8" type="text" name="dni" required>
-            <input type="text" placeholder="Nombre"  name="username" required>
-            <input type="text" placeholder="Apellido"  name="username" required>
-            <input type="email" placeholder="Número de celular o correo electrónico" name="email" required>
-            <input placeholder="Igrese el monto" maxlength="8" type="text" name="monto" required>
-            <input placeholder="Numero de asiento" maxlength="8" type="text" name="numeroAsiento" required>
-             </table>
-          
-          <button type="submit" >Guaerdar</button>
-  
-        </form>
-      </div>
-      </div>
-
+     
+    
       <script>
-        function showDataContainer() {
-          document.getElementById('dataContainer').style.display = 'block';
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+          // Función para manejar el clic en los elementos SVG
+          function selectElement(event) {
+              // Desselecciona todos los elementos primero
+              const elements = document.querySelectorAll('circle');
+              elements.forEach(el => el.classList.remove('selected'));
+
+              // Selecciona el elemento clicado
+              event.target.classList.add('selected');
+
+              // Opcional: Enviar la información al servidor
+              // sendSelectionToServer(event.target.id);
+          }
+
+          // Añade el evento de clic a cada círculo
+          const circles = document.querySelectorAll('circle');
+          circles.forEach(circle => {
+              circle.addEventListener('click', selectElement);
+          });
+
+          // Función opcional para enviar datos al servidor
+          function sendSelectionToServer(elementId) {
+              fetch('/guardar-seleccion/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': '{{ csrf_token }}', // Añadir el token CSRF para seguridad
+                  },
+                  body: JSON.stringify({ elementId: elementId })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  console.log('Respuesta del servidor:', data);
+              });
+          }
+      });
+    
+      function showDataContainer() {
+          document.getElementById('registerFormContainer').classList.add('white');
+          document.getElementById('overlay').classList.add('active');
+        
+          
       }
+      
       function closeForm() {
-          document.getElementById('registerFormContainer').classList.remove('blurred');
-          document.getElementById('dataContainer').style.display = 'none';
+          document.getElementById('registerFormContainer').classList.remove('white');
+          document.getElementById('overlay').classList.remove('active');
+          
       }
+
 
          function openNav() {
            document.getElementById("mySidepanel").style.width = "250px";
@@ -845,8 +985,9 @@
          function closeNav() {
            document.getElementById("mySidepanel").style.width = "0";
          }
+
       </script>
-   </body>
-</html>
+   </body>   
+ </html>
 
 

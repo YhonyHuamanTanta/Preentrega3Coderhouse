@@ -1,33 +1,101 @@
-body{
-    background: #f0f2f5;
-
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none; 
+  }
+body {
     font-family: Arial, sans-serif;
-    
-    
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #f0f2f5;
+    position: center;
 }
 .mapadiv{
-    width: 101%;
-    margin: auto;
     
+    width: 100%;
+    margin: auto;    
+    cursor: pointer;
+   
+    
+    
+   
 }
 .mapadiv path{
-fill: #000000;
+
+    fill: #000000;
+
 
 }
 .mapadiv :hover{
-    fill: rgb(25, 0, 250);
+    fill: #ff0000
+    
+    
 }
-.container, .data-container {
+
+
+.container {
+    
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+    max-width: 500px;
+    width: 90%;
+    transition: opacity 0.5s, filter 0.5s;
+    z-index: 1;
+    
+}
+
+
+.hidden {
+    display: none;
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+.overlay {
+    
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+      
+   
+
+}
+
+.overlay.active {
+    display: flex;
+}
+
+
+h1 {
+    color: #0f98f8;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    color: #606770;
+    margin-bottom: 20px;
+}
+
+input[type="text"], select {
+    
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dddfe2;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .gender-container {
@@ -35,6 +103,7 @@ fill: #000000;
     justify-content: space-between;
     margin-bottom: 10px;
 }
+
 .gender-container label {
     flex: 1;
     text-align: center;
@@ -43,17 +112,43 @@ fill: #000000;
     border-radius: 4px;
     cursor: pointer;
 }
+
 .gender-container input {
     display: none;
 }
+
 .gender-container label:hover, .gender-container input:checked + label {
     background-color: #f0f2f5;
 }
 
-.data-container {
-    display: none;
-    margin-top: 20px;
+button {    
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0f98f8;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
-button:hover {
-    background-color: #457ec9;
+
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+ 
+  table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th, td {
+    cursor: pointer;
 }

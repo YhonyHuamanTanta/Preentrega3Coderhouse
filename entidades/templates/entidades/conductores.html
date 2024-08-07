@@ -53,6 +53,7 @@
                   <li><a href="{% url 'conductores' %}">Conductores</a></li>
                   <li><a href="{% url 'clientes' %}">Clientes</a></li>
                   <li><a href="{% url 'entregables' %}">Viajes</a></li>
+                  <li><a href="{% url 'verViajesClientes' %}">Viajes de Clinetes</a></li>
                </ul>
                {% endif %}
             </li>
@@ -86,6 +87,9 @@
                   <div class="col-md-8 col-sm-8">
                      <div class="right_bottun">
                         <ul class="conat_info d_none ">
+                           {% if user.is_authenticated %}
+                           <strong><li style="color: #ffffff; font-size: 17px; text-align: center;">{{ user.first_name }} {{ user.last_name }}</li></strong>
+                           {% endif %}
                            {% if not user.is_authenticated %}
                            <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                            {% endif %}

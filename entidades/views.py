@@ -15,6 +15,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 def home(request):
@@ -41,7 +45,7 @@ def busesForm(request):
             return render(request, "entidades/buses.html", contexto)
     else:
         miForm = BusesForm()
-    
+
     return render(request, "entidades/busesRegistrarForm.html", {"form": miForm})
 
 @login_required
@@ -54,10 +58,10 @@ def busesUpdate(request, id_buses):
             buses.placa = miForm.cleaned_data.get("placa")
             buses.save()
             contexto = {"buses": Buses.objects.all() }
-            return render(request, "entidades/buses.html", contexto)       
+            return render(request, "entidades/buses.html", contexto)
     else:
-        miForm = BusesForm(initial={"nombre": buses.nombre, "placa": buses.placa}) 
-    
+        miForm = BusesForm(initial={"nombre": buses.nombre, "placa": buses.placa})
+
     return render(request, "entidades/busesForm.html", {"form": miForm})
 
 @login_required
@@ -65,7 +69,7 @@ def busesDelete(request, id_buses):
     buses = Buses.objects.get(id=id_buses)
     buses.delete()
     contexto = {"buses": Buses.objects.all() }
-    return render(request, "entidades/buses.html", contexto)  
+    return render(request, "entidades/buses.html", contexto)
 
 
 @login_required
@@ -89,7 +93,7 @@ def conductoresForm(request):
             return render(request, "entidades/conductores.html", contexto)
     else:
         miForm = ConductoresForm()
-    
+
     return render(request, "entidades/conductoresRegistrarForm.html", {"form": miForm})
 
 @login_required
@@ -108,10 +112,10 @@ def conductoresUpdate(request, id_conductores):
             return render(request, "entidades/conductores.html", contexto)
     else:
         miForm = ConductoresForm(initial={"dni": conductores.dni, "nombre": conductores.nombre, "apellido": conductores.apellido, "profesion":conductores.profesion, "email": conductores.email})
-    
+
     return render(request, "entidades/conductoresForm.html", {"form": miForm})
-    
-    
+
+
 @login_required
 def conductoresDelete(request, id_conductores):
     conductores = Conductores.objects.get(id=id_conductores)
@@ -139,7 +143,7 @@ def clientesForm(request):
             return render(request, "entidades/clientes.html", contexto)
     else:
         miForm = ClientesForm()
-    
+
     return render(request, "entidades/clientesRegistrarForm.html", {"form": miForm})
 
 @login_required
@@ -157,7 +161,7 @@ def clientesUpdate(request, id_clientes):
             return render(request, "entidades/clientes.html", contexto)
     else:
         miForm = ClientesForm(initial={"dni": clientes.dni, "nombre": clientes.nombre, "apellido": clientes.apellido, "email": clientes.email})
-    
+
     return render(request, "entidades/clientesForm.html", {"form": miForm})
 
 @login_required
@@ -165,7 +169,7 @@ def clientesDelete(request, id_clientes):
     clientes = Clientes.objects.get(id=id_clientes)
     clientes.delete()
     contexto = {"clientes": Clientes.objects.all() }
-    return render(request, "entidades/clientes.html", contexto) 
+    return render(request, "entidades/clientes.html", contexto)
 
 @login_required
 def entregables(request):
@@ -190,9 +194,9 @@ def entregablesForm(request):
             return render(request, "entidades/entregables.html", contexto)
     else:
         miForm = EntregablesForm()
-    
+
     return render(request, "entidades/entregablesRegistrarForm.html", {"form": miForm})
-    
+
 @login_required
 def entregablesUpdate(request, id_entregables ):
     entregables = Entregables.objects.get(id=id_entregables)
@@ -211,7 +215,7 @@ def entregablesUpdate(request, id_entregables ):
             return render(request, "entidades/entregables.html", contexto)
     else:
         miForm = EntregablesForm(initial={"dni":entregables.dni, "nombre":entregables.nombre, "apellido":entregables.apellido, "desde":entregables.desde, "lugar":entregables.lugar , "fechaEntrega":entregables.fechaEntrega, "entregado":entregables.entregado})
-    
+
     return render(request, "entidades/entregablesForm.html", {"form": miForm})
 
 @login_required
@@ -219,7 +223,7 @@ def entregablesDelete(request, id_entregables):
     entregables = Entregables.objects.get(id=id_entregables)
     entregables.delete()
     contexto = {"entregables": Entregables.objects.all() }
-    return render(request, "entidades/entregables.html", contexto) 
+    return render(request, "entidades/entregables.html", contexto)
 
 @login_required
 def buscarDni(request):
@@ -230,17 +234,17 @@ def encontrarDni(request):
     if request.GET["buscar"]:
         patron = request.GET["buscar"]
         dni = Entregables.objects.filter(dni__icontains=patron)
-        contexto = {'entregables': dni}    
+        contexto = {'entregables': dni}
     else:
         contexto = {'entregables': Entregables.objects.all()}
-        
+
     return render(request, "entidades/entregables.html", contexto)
 
 
 
 def iniciarSecion(request):
     if request.method == "POST":
-        
+
         usuario = request.POST["username"]
         clave = request.POST["password"]
         user = authenticate(request, username=usuario, password=clave)
@@ -249,9 +253,9 @@ def iniciarSecion(request):
             return render(request, "entidades/index.html")
         else:
             return redirect(reverse_lazy('login'))
-        
+
     else:
-        messages.error(request, 'El nombre de usuario o contraseña incorrectos')
+        messages.error(request, 'El nombre de usuario o contraseña son incorrectos')
         miForm = AuthenticationForm()
 
     return render(request, "entidades/inicio.html", {"form": miForm})
@@ -261,11 +265,11 @@ def iniciarSecion(request):
         return render(request, "entidades/inicio.html", {"form": AuthenticationForm})
     else:
         user = authenticate( request, username=request.POST["username"], password=request.POST["password"],
-            
+
         )
         if user is not None:
             return render(request, "entidades/inicio.html", {"form": AuthenticationForm, "error": "Datos incorrecto"}),
-        else: 
+        else:
             login(request,user)
             return redirect('home')
 """
@@ -280,7 +284,7 @@ def registrar(request):
     else:
         miForm = RegistrarForm()
 
-    return render(request, "entidades/inicio.html", {"form": miForm}) 
+    return render(request, "entidades/inicio.html", {"form": miForm})
 
 
 
@@ -295,15 +299,15 @@ def registrar(request):
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        
+
         if password1 != password2:
             messages.error(request, 'Las contraseñas no coinciden.')
             return redirect('registrar')
-        
+
         if User.objects.filter(username=username).exists():
             messages.error(request, 'El nombre de usuario ya existe.')
             return redirect('registrar')
-        
+
         user = User.objects.create_user(username=username, password=password1)
         user.save()
         login(request, user)
@@ -318,7 +322,7 @@ def cambiarContraseña(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  
+            update_session_auth_hash(request, user)
             messages.success(request, 'Tu contraseña ha sido actualizada exitosamente.')
             return redirect('home')
         else:
@@ -328,7 +332,7 @@ def cambiarContraseña(request):
     return render(request, 'entidades/cambiarcontraseña.html', {
         'form': form
     })
-    
+
 def cerrarSesion(request):
     logout(request)
     return redirect('login')
@@ -410,7 +414,69 @@ def registrarUsuario(request):
 """
 
 
+@login_required
+def atenderClinetesForm(request):
+    if request.method == "POST":
+        miForm = AtenderClinetesForm(request.POST)
+        if miForm.is_valid():
+            atenderclinetes_dni = miForm.cleaned_data.get("dni")
+            atenderclinetes_nombre = miForm.cleaned_data.get("nombre")
+            atenderclinetes_apellido = miForm.cleaned_data.get("apellido")
+            atenderclinetes_desde = miForm.cleaned_data.get("desde")
+            atenderclinetes_llegada = miForm.cleaned_data.get("llegada")
+            atenderclinetes_nAsiento = miForm.cleaned_data.get("nAsiento")
+            atenderclinetes_costo = miForm.cleaned_data.get("costo")
+            atenderclinetes = AtenderClinetes(dni=atenderclinetes_dni, nombre=atenderclinetes_nombre, apellido=atenderclinetes_apellido, desde= atenderclinetes_desde, llegada=atenderclinetes_llegada, nAsiento=atenderclinetes_nAsiento, costo=atenderclinetes_costo)
+            atenderclinetes.save()
+            contexto = {"atenderclinetes": AtenderClinetes.objects.all() }
+            return render(request, "entidades/registrarUsuariosBus.html", contexto)
+    else:
+        miForm = AtenderClinetesForm()
+
+    return render(request, "entidades/registrarUsuariosBus.html", {"form": miForm})
+
+@login_required
+def atenderClinetesDelete(request, id_atenderclinetes):
+    atenderclinetes = AtenderClinetes.objects.get(id=id_atenderclinetes)
+    atenderclinetes.delete()
+    contexto = {"atenderclinetes": AtenderClinetes.objects.all() }
+    return render(request, "entidades/viajesClienetesAtendido.html", contexto)
+
+@login_required
+def atenderClineteDelete(request, id_atenderclinetes):
+    atenderclinetes = AtenderClinetes.objects.get(id=id_atenderclinetes)
+    atenderclinetes.delete()
+    contexto = {"atenderclinetes": AtenderClinetes.objects.all() }
+    return render(request, "entidades/registrarUsuariosBus.html", contexto)
+
+
+@login_required
+def verViajesClientes(request):
+    contexto = {"atenderclinetes": AtenderClinetes.objects.all()}
+    return render(request, 'entidades/viajesClienetesAtendido.html', contexto)
+
 
 @login_required
 def registrarUsuario(request):
-    return render(request, 'entidades/registrarUsuariosBus.html')
+    contexto = {"atenderclinetes": AtenderClinetes.objects.all()}
+    return render(request, 'entidades/registrarUsuariosBus.html', contexto)
+
+
+# def atenderClineteDelete(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+#             atenderclinetes = data.get('id')
+#             atenderclinetes = get_object_or_404(AtenderClinetes, id=atenderclinetes)
+#             atenderclinetes.delete()
+#             return JsonResponse({'status': 'success'})
+#         except Exception as e:
+#             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+#     return JsonResponse({'status': 'error'}, status=400)
+
+
+
+# @login_required
+# def registrarUsuario(request):
+#     return render(request, 'entidades/registrarUsuariosBus.html')
+

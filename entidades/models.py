@@ -49,6 +49,19 @@ class Entregables(models.Model):
 
     def __str__(self):
         return f"{self.dni}, {self.apellido}, {self.nombre}"
+    
+class AtenderClinetes(models.Model):
+    dni = models.CharField(max_length=8)
+    nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=60)
+    desde = models.CharField(max_length=80)
+    llegada = models.CharField(max_length=80)
+    nAsiento = models.CharField(max_length=80)
+    costo = models.CharField(max_length=7)    
+    
+    def __str__(self):
+        return f"{self.dni}, {self.apellido}, {self.nombre}"
+    
 
 class Usuario(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)

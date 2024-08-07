@@ -243,6 +243,7 @@ textarea {
   border:1px solid#0f98f8;
   margin:0 0 0 10px;
   transition:0.2s;
+  
 }
 
 ._social_04 ol li:nth-child(1):hover{
@@ -250,6 +251,7 @@ textarea {
   border:1px solid#0f98f8;
   color:#fff;
   transition:0.2s;
+  
 }
 
 ._social_04 ol li:nth-child(2):hover{
@@ -264,6 +266,7 @@ textarea {
   border:1px solid#c32f10;
   color:#fff;
   transition:0.2s;
+  
 }
 
 ._social_04 ol li:nth-child(4):hover{

@@ -52,6 +52,7 @@
                <li><a href="{% url 'conductores' %}">Conductores</a></li>
                <li><a href="{% url 'clientes' %}">Clientes</a></li>
                <li><a href="{% url 'entregables' %}">Viajes</a></li>
+               <li><a href="{% url 'verViajesClientes' %}">Viajes de Clinetes</a></li>
             </ul>
             {% endif %}
          </li>
@@ -85,12 +86,15 @@
                   <div class="col-md-8 col-sm-8">
                      <div class="right_bottun">
                         <ul class="conat_info d_none ">
+                           {% if user.is_authenticated %}
+                           <strong><li style="color: #ffffff; font-size: 17px; text-align: center;">{{ user.first_name }} {{ user.last_name }}</li></strong>
+                           {% endif %}
                            {% if not user.is_authenticated %}
                            <li><a href="{% url 'inicio' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                            {% endif %}
                            {% if user.is_authenticated %}
                            <li><a href="{% url 'buscarDni' %}"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                           {% endif %}
+                           {% endif %}                           
                         </ul>
                         <button class="openbtn" onclick="openNav()"><img src="{% static 'images/menu_icon.png' %}" alt="#"/> </button> 
                      </div>
@@ -113,6 +117,7 @@
                         <th>Apellido</th>
                         <th>Email</th>
                         <th>Fecha de Registro</th>
+                        <th>Roles</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -126,11 +131,29 @@
                             <td>{{ usuario.email }}</td>
                             <td>{{ usuario.date_joined|date:"d M Y H:i:s" }}</td>
                             <td>
+                              <form action="#" method="post" ">
+                                 {% csrf_token %}
+                                 <div class="btn-group">  
+                                    <button type="button" class="btn btn-primary">Roles</button>
+                                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    <span class="visually-hidden"></span>
+                                 </button>
+                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Administrador</a></li>
+                                    <li><a class="dropdown-item" href="#">Trabajador</a></li>
+                                    <li><a class="dropdown-item" href="#">Cliente</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Dar de Baja</a></li>
+                                 </ul>
+                                 </div>                                                              
+                              </form>                             
+                           </td>
+                           <td>
                               <form action="{% url 'eliminarUsuario' usuario.id %}" method="post">
                                  {% csrf_token %}
-                                 <button class="btn btn-outline-dark" type="submit">Eliminar</button>
+                                 <button class="btn btn-primary" type="submit">Eliminar</button>
                              </form>
-                            </td>
+                           </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -220,6 +243,24 @@
          function closeNav() {
            document.getElementById("mySidepanel").style.width = "0";
          }
+
+        document.addEventListener('click', function(event) {
+         var dropdowns = document.getElementsByClassName("dropdown-menu");
+         var dropdown = document.querySelectorAll('.btn-group');
+         for (var i = 0; i < dropdown.length; i++) {
+             if (!dropdown[i].contains(event.target)) {
+                 dropdowns[i].style.display = 'none';
+             }
+         }
+     });
+     
+     document.querySelectorAll('.dropdown-toggle-split').forEach(function(button) {
+         button.addEventListener('click', function(event) {
+             event.stopPropagation();
+             var dropdownContent = this.nextElementSibling;
+             dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+         });
+     });
       </script>
    </body>
 </html>
